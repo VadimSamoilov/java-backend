@@ -27,7 +27,7 @@ public class InMemoryTaskManager implements TaskManager {
                 return 0;
             }
         }
-    }); //Тут TreeSet
+    });
 
     public InMemoryHistoryManager getHistoryStorage() {
         return historyStorage;
