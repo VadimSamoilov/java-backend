@@ -28,5 +28,5 @@ public class Practicum {
 }
 ```
 ---------------------------
-Java 17.0, JUnit 5.8.1, Http,
+Java 17.0, JUnit 5.8.1, Http,Json
 
