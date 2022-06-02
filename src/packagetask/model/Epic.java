@@ -17,27 +17,7 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-        LocalDateTime startFirstSubtask = LocalDateTime.MAX;
-        if (!epicSubTaskList.isEmpty()) {
-            for (SubTask subTask : epicSubTaskList) {
-                if (subTask.getEndTime() == null) {
-                    startFirstSubtask = LocalDateTime.now();
-                }
-            }
-            for (SubTask subtask : epicSubTaskList) {
-                if (subtask.getStartTime() != null &&
-                        startFirstSubtask.isAfter(subtask.getStartTime())) {
-                    startFirstSubtask = subtask.getStartTime().minusSeconds(5);
-                }
-            }
-            if (startFirstSubtask.isEqual(LocalDateTime.MAX)) {
-                return null;
-            } else {
-                return startFirstSubtask;
-            }
-        }
-        startFirstSubtask = super.getStartTime();
-        return startFirstSubtask;
+        return super.getStartTime();
     }
 
     @Override

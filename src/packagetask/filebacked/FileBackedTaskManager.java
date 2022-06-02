@@ -11,7 +11,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +19,8 @@ import static java.util.List.*;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    private String taskSavedToFile = "type,name,description,id,epicId,status; \n";
 
+    private String taskSavedToFile = "type,name,description,id,epicId,status; \n";
     private static File dataBase;
 
     public FileBackedTaskManager() {
@@ -44,14 +43,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public ArrayList<SubTask> getEpicSubTask(int keyId) {
-        ArrayList<SubTask> value = super.getEpicSubTask(keyId);
+    public List<SubTask> getEpicSubTask(int keyId) {
+        List<SubTask> value = super.getEpicSubTask(keyId);
         save();
         return value;
     }
 
     @Override
-    public Object getTaskById(int id) {
+    public Task getTaskById(int id) {
         return super.getTaskById(id);
     }
 
@@ -86,22 +85,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     }
 
-    public void save() throws ManagerSaveException {
+    // сохранение в файл
+    public void save()  {
+        String saveTask = taskSavedToFile;
         for (Task task : getStorageTasks()) {
-            taskSavedToFile = taskSavedToFile + toString(task) + ";" + "\n";
+            saveTask = saveTask + toString(task) + ";" + "\n";
         }
         for (Epic epic : getStorageEpics()) {
-            taskSavedToFile = taskSavedToFile + toString(epic) + ";" + "\n";
+            saveTask = saveTask + toString(epic) + ";" + "\n";
         }
         for (SubTask subTask : getStorageSubTask()) {
-            taskSavedToFile = taskSavedToFile + toString(subTask) + "" + "\n";
+            saveTask = saveTask + toString(subTask) + "" + "\n";
         }
-        taskSavedToFile = taskSavedToFile + "\n" + toString(historyStorage);
+        saveTask = saveTask + "\n" + toString(historyStorage);
 
         try (OutputStream outputStream = new FileOutputStream(dataBase)) {
-            outputStream.write(taskSavedToFile.getBytes(StandardCharsets.UTF_8));
+            outputStream.write(saveTask.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException("Не удалось записать в файл");
         }
     }
 
@@ -115,7 +116,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     String toString(HistoryManager manager) {
         String history = "";
         int count = 0;
-        ArrayList<Task> arrayHistory = (ArrayList<Task>) manager.getHistory();
+        List<Task> arrayHistory = manager.getHistory();
         for (Task task : arrayHistory) {
             count++;
             if (count < arrayHistory.size()) {
@@ -128,7 +129,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     //чтение сохраненного файла и сохранение задач в Map-ы
-    public void fileReading(File file) throws DateTimeParseException {
+    public void fileReading(File file) {
         try (InputStream inputStream = new FileInputStream(file)) {
             byte[] array = new byte[1024];
             int count = inputStream.read(array);
@@ -161,7 +162,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    void saveFileHistory(List<Integer> listHistory) {
+    public void saveFileHistory(List<Integer> listHistory) {
         for (Integer idKey : listHistory) {
             for (Task task : getStorageTasks()) {
                 if (task.getKeyId() == idKey) {

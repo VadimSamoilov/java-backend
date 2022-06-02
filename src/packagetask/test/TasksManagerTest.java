@@ -18,25 +18,26 @@ public class TasksManagerTest extends FileBackedTaskManager { //Тестовый
                 LocalDateTime.of(2023, 4, 8, 1, 0)));
         fileBackedTaskManager.addSimpleTask(new Task("Задача № 2",
                 "Правильно прописать subTask", Duration.ofHours(1),
-                LocalDateTime.of(2023, 4, 8, 1, 0)));
+                LocalDateTime.of(2023, 4, 4, 19, 0)));
+
 
         // добавление эпика с подзадачами
         fileBackedTaskManager.addEpic(new Epic("Задача №4", "Сюда добавляю подзадачи",
-                Duration.ofHours(1), LocalDateTime.of(2023, 4, 8, 1, 0)));
+                Duration.ofHours(1), LocalDateTime.of(2022, 1, 12, 1, 0)));
         fileBackedTaskManager.addSubTask(new SubTask("Подзадача",
                 "Необходимо настроить добавление", 3, Duration.ofHours(1),
-                LocalDateTime.of(2023, 4, 8, 1, 0)));
+                LocalDateTime.of(2022, 4, 28, 13, 0)));
         fileBackedTaskManager.addSubTask(new SubTask("Подзадача",
                 "Необходимо настроить добавление в сабтаск", 3,Duration.ofHours(1),
-                LocalDateTime.of(2023, 4, 8, 1, 0)));
+                LocalDateTime.of(2021, 6, 8, 1, 0)));
 
 
         // добавление эпика без подзадач
         fileBackedTaskManager.addEpic(new Epic("Задача №5", "Сюда добавляю один эпик",
-                Duration.ofHours(1), LocalDateTime.of(2023, 4, 8, 1, 0)));
+                Duration.ofHours(1), LocalDateTime.of(2021, 4, 12, 11, 0)));
         fileBackedTaskManager.addSubTask(new SubTask("Подзадача Эпика 6",
                 "Необходимо настроить добавлени в файл", 6,Duration.ofHours(1),
-                LocalDateTime.of(2023, 4, 8, 1, 0)));
+                LocalDateTime.of(2023, 5, 8, 1, 0)));
     }
 
     public void CodeTest(FileBackedTaskManager fileBackedTaskManager) {
@@ -65,6 +66,8 @@ public class TasksManagerTest extends FileBackedTaskManager { //Тестовый
             System.out.println(task.toString());
         }
         System.out.println();
+
+
     }
 
     public void testHistory(FileBackedTaskManager fileBackedTaskManager) {

@@ -65,10 +65,10 @@ class FileBackedTaskManagerTest {
         FileBackedTaskManager managerSave = FileBackedTaskManager.loadFromFile(baseTest);
         Epic epic =new Epic("Задача №4", "Сюда добавляю подзадачи",
                 Duration.ofHours(3), LocalDateTime.of(2022, 4, 2, 1, 0));
-        Epic epic1 =new Epic("Задача №5", "Сюда добавляю один эпик",
-                Duration.ofHours(3), LocalDateTime.of(2022, 4, 8, 1, 0));
+//        Epic epic1 =new Epic("Задача №5", "Сюда добавляю один эпик",
+//                Duration.ofHours(3), LocalDateTime.of(2022, 4, 8, 1, 0));
         managerSave.addEpic(epic);
-        managerSave.addEpic(epic1);
+    //    managerSave.addEpic(epic1);
 
 
         FileBackedTaskManager managerTest = FileBackedTaskManager.loadFromFile(baseTest);

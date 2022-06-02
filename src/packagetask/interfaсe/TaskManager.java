@@ -2,7 +2,8 @@ package packagetask.interfaсe;
 import packagetask.model.Epic;
 import packagetask.model.SubTask;
 import packagetask.model.Task;
-import java.util.ArrayList;
+
+import java.util.List;
 
 
 public interface TaskManager {
@@ -15,11 +16,10 @@ public interface TaskManager {
 
     // добавляем subTask в эпик
      void addSubTask(SubTask subTasks);
-     ArrayList<SubTask> getEpicSubTask(int keyId);
+     List<SubTask> getEpicSubTask(int keyId);
 
     // получаем задачу по идентификатору
      Object getTaskById(int id);
-
      void delitingTaskById(int id);
     void updateSubTask(SubTask subTask);
     void updateEpic(Epic epic);
